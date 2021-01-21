@@ -1,0 +1,93 @@
+<div>
+    <h3>&nbsp; <a href="#" (click)="show_menu = (!show_menu || survey == null)">&#8779;</a></h3>
+    <div *ngIf="show_menu">
+        <table style="width:80%;font-size: 90%">
+            <tr *ngFor="let s of surveys">
+                <th style="text-align: left;width: 30%">{{s.clientName}}</th>
+                <td><a href="#" (click)="show(s)">{{s.name}}</a></td>
+            </tr>
+        </table>
+        <p></p>
+        <textarea style="width: 80%" rows="3" cols="50" [(ngModel)]="custom_survey"></textarea> <br/>
+        <button (click)="loadSurvey()">Custom Survey</button>
+    </div>
+</div>
+<div *ngIf="! show_menu" style="width: 100%">
+    <div style="width: 35%">
+    <div style="text-align:center;font-size: 85%;float: left;width:60%">
+        <div  style="width: 100%;">
+                    <mat-form-field style="width: 100%;padding-left: 20px">
+                            <mat-select [formControl]="catMultiCtrl" placeholder="Categories" [multiple]="true" #multiSelect>
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="catMultiFilterCtrl"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let cat of filteredCatMulti | async" [value]="cat">
+                                {{cat.name}}
+                            </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    <span style="width: 30%">&nbsp;</span>
+
+        </div>
+        <div style="width: 350px;text-align:left;overflow-wrap:break-word;background-color: #efffff" *ngIf="(ai_cats.length > 0)">
+            <h4 style="text-align:center">AI Recommendation</h4>
+            <ul class="heroes">
+                <li *ngFor="let cat of ai_cats">
+                    <span class="badge"><a (click)="catChange(cat, true)" style="cursor: pointer;text-decoration: underline;">{{cat}} [+]</a></span> 
+                </li>
+            </ul>
+        </div>
+        <br/>
+        <div style="float:left;width: 350px;text-align:left;overflow-wrap:break-word;background-color: #ffffef" *ngIf="(stat_cats.length > 0)">
+            <h4 style="text-align:center">Relation Recommendation</h4>
+            <ul class="heroes">
+                <li *ngFor="let cat of stat_cats">
+                    <span class="badge"><a (click)="catChange(cat, true)" style="cursor: pointer;text-decoration: underline;">{{cat}} [+]</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <div style="width: 68%;float: right;;">
+    <div style="padding-left: 30px;float: left;width: 100%;">
+        <div *ngIf="categories?.length > 0" style="font-size: 85%;background-color: #efffef;width:100%">
+            <strong>Selected Categories:</strong> {{catMultiCtrl?.value?.length}}
+            <ul class="heroes">
+                <li *ngFor="let cat of categories">
+                    <span class="badge"><a href="#" (click)="catChange(cat, false)">{{cat}} [x]</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="padding-left: 30px;float: left;">
+        <table style="text-align: left;font-size: 75%;width: 75%;">
+          <tr>
+            <th>Client</th>
+            <td style="padding-left: 40px">{{survey.clientName}}</td>
+          </tr>
+          <tr>
+                <th>Name</th>
+                <td style="padding-left: 40px">{{survey.name}}</td>
+              </tr>
+          <tr>
+            <th>Survey Type</th>
+            <td style="padding-left: 40px">{{survey.channelType}}</td>
+          </tr>
+          <tr *ngFor="let latent of survey.latents; index as i">
+            <th item-width="300px">{{latent.name}} <br /> 
+                <select *ngIf="super_latents?.length == survey.latents.length" value="{{super_latents[i]}}" style="font-size: 80%">
+                    <option *ngFor="let o of all_slatents" [attr.selected]="o==super_latents[i] ? true : null">{{o}}</option>
+                </select>
+            <td>
+                <ul>
+                    <li *ngFor="let q of latent.questions">
+                        {{q}}
+                    </li>
+                </ul>
+            </td>
+          </tr>          
+        </table>
+        <button (click) ="debug()">Submit</button>
+    </div>
+    </div>
+</div>

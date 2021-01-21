@@ -1,0 +1,10 @@
+{
+  "/inital": {
+    "target": "http://10.198.8.122:9181",
+    "secure": false
+  },
+  "/cats": {
+    "target": "http://10.198.8.122:9181",
+    "secure": false
+  }  
+}
