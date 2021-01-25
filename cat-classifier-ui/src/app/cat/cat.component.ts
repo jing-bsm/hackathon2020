@@ -150,6 +150,7 @@ export class CatComponent implements OnInit {
       }    
     })
     if(null != this.categories && this.categories.length > 0){
+      this.stat_cats = []
       this.service.getRel(this.categories).subscribe(data =>{
         this.stat_cats = data as string []
       })
@@ -186,5 +187,10 @@ export class CatComponent implements OnInit {
   }
   loadSurvey(){
     this.show(JSON.parse(this.custom_survey))
+  }
+  clearAllCats(){
+    this.categories=[]
+    this.stat_cats = []
+    this.loadRecommand()
   }
 }

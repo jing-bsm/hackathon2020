@@ -1,7 +1,7 @@
 <div>
     <h3>&nbsp; <a href="#" (click)="show_menu = (!show_menu || survey == null)">&#8779;</a></h3>
     <div *ngIf="show_menu">
-        <table style="width:80%;font-size: 90%">
+        <table style="width:80%;font-size: 90%;">
             <tr *ngFor="let s of surveys">
                 <th style="text-align: left;width: 30%">{{s.clientName}}</th>
                 <td><a href="#" (click)="show(s)">{{s.name}}</a></td>
@@ -12,7 +12,7 @@
         <button (click)="loadSurvey()">Custom Survey</button>
     </div>
 </div>
-<div *ngIf="! show_menu" style="width: 100%">
+<div  *ngIf="! show_menu" style="width: 100%">
     <div style="width: 35%">
     <div style="text-align:center;font-size: 85%;float: left;width:60%">
         <div  style="width: 100%;">
@@ -51,7 +51,7 @@
     <div style="width: 68%;float: right;;">
     <div style="padding-left: 30px;float: left;width: 100%;">
         <div *ngIf="categories?.length > 0" style="font-size: 85%;background-color: #efffef;width:100%">
-            <strong>Selected Categories:</strong> {{catMultiCtrl?.value?.length}}
+            <strong>Selected Categories:</strong> <a (click)="clearAllCats()" style="cursor: pointer;text-decoration: underline;">(clear all)</a>
             <ul class="heroes">
                 <li *ngFor="let cat of categories">
                     <span class="badge"><a href="#" (click)="catChange(cat, false)">{{cat}} [x]</a></span>
